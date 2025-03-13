@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).reshape(-1, 1)
+y = np.array([0, 0, 0, 1, 1, 1, 1, 1, 1, 1])
+
+k = 3  # Nombre de voisins
+model = KNeighborsClassifier(n_neighbors=k)
+model.fit(x, y)
+
+y_pred = model.predict(x)
+
+accuracy = accuracy_score(y, y_pred)
+conf_matrix = confusion_matrix(y, y_pred)
+class_report = classification_report(y, y_pred)
+
+print(f"Précision du modèle : {accuracy:.4f}")
+print("Matrice de confusion :\n", conf_matrix)
+print("Rapport de classification :\n", class_report)
+
+plt.scatter(x, y, color='blue', label='Données réelles')
+plt.scatter(x, y_pred, color='red', marker='x', label='Prédictions KNN')
+plt.xlabel("x")
+plt.ylabel("Classe prédite")
+plt.legend()
+plt.show()
