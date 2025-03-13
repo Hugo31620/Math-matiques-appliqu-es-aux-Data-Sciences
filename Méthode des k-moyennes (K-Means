@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+np.random.seed(42)
+x = np.concatenate([
+    np.random.normal(loc=2, scale=0.5, size=(50, 2)),
+    np.random.normal(loc=6, scale=0.5, size=(50, 2)),
+    np.random.normal(loc=10, scale=0.5, size=(50, 2))
+])
+
+k = 3
+
+kmeans = KMeans(n_clusters=k, random_state=42)
+kmeans.fit(x)
+
+y_pred = kmeans.predict(x)
+
+plt.scatter(x[:, 0], x[:, 1], c=y_pred, cmap='viridis', marker='o', edgecolor='k', label='Données')
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], color='red', marker='x', s=200, label='Centroïdes')
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.title("Clustering avec K-Means")
+plt.show()
