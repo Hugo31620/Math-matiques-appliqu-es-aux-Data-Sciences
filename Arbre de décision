@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeRegressor
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).reshape(-1, 1)
+y = np.array([2.1, 5.9, 10.3, 17.5, 27.2, 39.6, 54.9, 72.8, 93.3, 116.5])
+
+regressor = DecisionTreeRegressor(max_depth=3)  # Profondeur de l'arbre ajustable
+regressor.fit(x, y)
+
+y_pred = regressor.predict(x)
+
+plt.scatter(x, y, color='blue', label='Données réelles')
+plt.plot(x, y_pred, color='red', linestyle='dashed', label='Prédictions de l'arbre de décision')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.show()
+
+def plot_decision_tree(model):
+    from sklearn.tree import plot_tree
+    plt.figure(figsize=(10, 6))
+    plot_tree(model, feature_names=["x"], filled=True)
+    plt.show()
+
+plot_decision_tree(regressor)
