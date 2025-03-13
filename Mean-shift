@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import MeanShift, estimate_bandwidth
+
+np.random.seed(42)
+x = np.concatenate([
+    np.random.normal(loc=2, scale=0.5, size=(50, 2)),
+    np.random.normal(loc=6, scale=0.5, size=(50, 2)),
+    np.random.normal(loc=10, scale=0.5, size=(50, 2))
+])
+
+bandwidth = estimate_bandwidth(x, quantile=0.2)
+
+mean_shift = MeanShift(bandwidth=bandwidth)
+mean_shift.fit(x)
+
+y_pred = mean_shift.predict(x)
+
+cluster_centers = mean_shift.cluster_centers_
+
+plt.scatter(x[:, 0], x[:, 1], c=y_pred, cmap='viridis', marker='o', edgecolor='k', label='Données')
+plt.scatter(cluster_centers[:, 0], cluster_centers[:, 1], color='red', marker='x', s=200, label='Centroïdes')
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.title("Clustering avec Mean-Shift")
+plt.show()
